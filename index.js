@@ -20,11 +20,23 @@ app.use(express.urlencoded({ extended: false }));
 
 io.on("connection", (socket) => {
   console.log(socket.id);
+
+  //messages
   socket.on("message", (message) => {
     socket.broadcast.emit("message", {
       body: message.body,
       from: message.from,
     });
+  });
+
+  //Start game
+  socket.on("startGame", () => {
+    socket.broadcast.emit("startGame");
+  });
+
+  //ShowForm
+  socket.on("showForm", () => {
+    socket.broadcast.emit("showForm");
   });
 });
 
